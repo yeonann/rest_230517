@@ -1,6 +1,5 @@
 package com.ll.rest.boundedContext.member.controller;
 
-import com.ll.rest.boundedContext.member.entity.Member;
 import com.ll.rest.boundedContext.member.service.MemberService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -29,8 +28,11 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public Member login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse resp) { // @RequestBody를 통해 json으로 받은 데이터를 해석할 수 있다.
-        resp.addHeader("Authentication", "JWT 토큰");
-            return memberService.findByUsername(loginRequest.getUsername()).orElse(null);
+    public String login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse resp) {
+        String accessToken = memberService.genAccessToken(loginRequest.getUsername(), loginRequest.getPassword());
+
+        resp.addHeader("Authentication", accessToken);
+
+        return "응답본문";
         }
     }
