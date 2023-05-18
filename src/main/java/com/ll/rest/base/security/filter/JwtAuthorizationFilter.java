@@ -50,7 +50,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private void forceAuthentication(Member member) {
         User user = new User(member.getUsername(), member.getPassword(), member.getAuthorities());
 
-        // 스프링 시큐리티 객체에 저장할 authentication 객체를 생성
         UsernamePasswordAuthenticationToken authentication =
                 UsernamePasswordAuthenticationToken.authenticated(
                         user,
